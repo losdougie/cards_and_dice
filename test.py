@@ -1,5 +1,6 @@
 import dice
 import cards
+import os
 
 def test_dice():
     d1 = dice.die()
@@ -21,10 +22,29 @@ def test_cards():
     print("Done Dealing ...")
     deck.read_top_cards(5)
 
+def read_folder(folder_name):
+    list_of_files = []
+    for file in os.listdir(folder_name):
+        file = os.path.join(folder_name, file)
+        if os.path.isfile(file):
+            filename = os.path.splitext(os.path.basename(file))[0]
+            list_of_files.append(filename)
+    return list_of_files
+
+def walk_folder(folder_name):
+    for items in os.walk(folder_name):
+        parent_folder = items[0]
+        folders = items[1]
+        files = items[2]
+        for file in files:
+            filename = os.path.splitext(file)[0]
+            print(filename)
+
 def main():
     # test_dice()
-    test_cards()
-
+    # test_cards()
+    print(read_folder("./test_folder"))
+    walk_folder("./test_folder")
 
 if __name__ == "__main__":
     main()
